@@ -30,8 +30,7 @@ const ApiCall = async (pokemon) => {
 
   const evoChain = await fetch(`${evoData.evolution_chain.url}`);
   const evoChainData = await evoChain.json();
-  console.log(evoChainData.chain);
-  console.log(evoChainData.chain.evolves_to.length);
+
   if (evoChainData.chain.evolves_to.length === 0) {
     evolutions.textContent = "N/A";
   }
