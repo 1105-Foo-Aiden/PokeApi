@@ -14,7 +14,6 @@ const ApiCall = async (pokemon) => {
   const localFetch = await fetch(data.location_area_encounters);
   const localData = await localFetch.json();
   
-
   const evoFetch = await fetch(`${data.species.url}`);
   const evoData = await evoFetch.json();
 
@@ -37,10 +36,10 @@ const ApiCall = async (pokemon) => {
     traverseEvolutions(evoChainData.chain);
     evolutions.textContent = evoArr.join(" > ");
   }
-    const moveArray = data.moves.map(move => move.move.name);
-    const abilitiesArray = data.abilities.map(ability => ability.ability.name);
-    const typeArr = data.types.map(type => type.type.name);
-  console.log(data);
+  const moveArray = data.moves.map(move => move.move.name);
+  const abilitiesArray = data.abilities.map(ability => ability.ability.name);
+  const typeArr = data.types.map(type => type.type.name);
+  
   names.innerText = data.name;
   let randLocal = Math.floor(Math.random(0, localData.length));
   locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "N/A";
