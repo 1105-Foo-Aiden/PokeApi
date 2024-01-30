@@ -1,4 +1,3 @@
-let pokemonImg = document.getElementById("pokemonImg");
 let searchBtn = document.getElementById("searchBtn");
 let searchField = document.getElementById("searchField");
 let randomBtn = document.getElementById("randomBtn");
@@ -39,7 +38,7 @@ const ApiCall = async (pokemon) => {
   const moveArray = data.moves.map(move => move.move.name);
   const abilitiesArray = data.abilities.map(ability => ability.ability.name);
   const typeArr = data.types.map(type => type.type.name);
-  
+
   names.innerText = data.name;
   let randLocal = Math.floor(Math.random(0, localData.length));
   locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "N/A";
