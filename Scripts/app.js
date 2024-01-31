@@ -7,6 +7,7 @@ let favList = document.getElementById('favList')
 let data;
 let shiny = false,  once = false
 
+
 const ApiCall = async (pokemon) => {
   searchField.value = "";
   const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -26,15 +27,20 @@ const ApiCall = async (pokemon) => {
   } else {
     const evoArr = [evoChainData.chain.species.name];
 
-    const traverseEvolutions = (chain) => {
-      if (chain.evolves_to.length === 0) return;
-
-      chain.evolves_to.forEach((evo) => {
+    const seeEvos = chain => {
+      if (chain.evolves_to.length === 0) {
+        return;
+      }
+      else{
+        chain.evolves_to.forEach(evo => {
         evoArr.push(evo.species.name);
-        traverseEvolutions(evo);
-      });
+        seeEvos(evo);
+        });
+      }
+
+      
     };
-    traverseEvolutions(evoChainData.chain);
+    seeEvos(evoChainData.chain);
     evolutions.textContent = evoArr.join(" > ");
   }
   const moveArray = data.moves.map(move => move.move.name);
@@ -73,6 +79,7 @@ favBtn.addEventListener('click', () =>{
     //pushin name of PKN into favorites
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
+      
       ShowNotification(`You have removed ${data.name} from favorites`)
     }
     else{
@@ -101,16 +108,19 @@ showFavBtn.addEventListener('click', () =>{
     let favorites = localStorage.getItem('favorites')
     let pknName = document.createElement('li')
     let emptyFav = document.createElement('p')
-    if(favorites && favorites.length > 0)
+    favorites = JSON.parse(favorites)
+    favorites = favorites.join(', ')
+    if(favorites.length > 0)
     {
+      
         if(once){
-            favList.removeChild(pknName)
-            once = false
+          favList.removeChild(pknName)
+          once = false
         }
         else{
-            pknName.textContent = favorites
-            favList.appendChild(pknName)
-            once = true
+          pknName.textContent = favorites
+          favList.appendChild(pknName)
+          once = true
         }
         
     }
@@ -127,6 +137,3 @@ showFavBtn.addEventListener('click', () =>{
       }   
     }
 })
-
-
-
