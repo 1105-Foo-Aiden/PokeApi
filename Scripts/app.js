@@ -4,11 +4,14 @@ let randomBtn = document.getElementById("randomBtn");
 let favBtn = document.getElementById("favBtn");
 let showFavBtn = document.getElementById('showFavBtn')
 let favList = document.getElementById('favList')
-let data;
-let shiny = false,  once = false
+let data
+let shiny = false
 
 
 const ApiCall = async (pokemon) => {
+  let favorites = localStorage.getItem('favorites')
+  favorites = JSON.parse(favorites)
+
   searchField.value = "";
   const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
   data = await promise.json();
@@ -21,8 +24,7 @@ const ApiCall = async (pokemon) => {
 
   const evoChain = await fetch(`${evoData.evolution_chain.url}`);
   const evoChainData = await evoChain.json();
-  console.log(data.sprites.front_default)
-
+  
   if (evoChainData.chain.evolves_to.length === 0) {
     evolutions.textContent = "N/A";
   } else {
@@ -45,16 +47,16 @@ const ApiCall = async (pokemon) => {
   const moveArray = data.moves.map(move => move.move.name);
   const abilitiesArray = data.abilities.map(ability => ability.ability.name);
   const typeArr = data.types.map(type => type.type.name);
-
+  favBtn.textContent = favorites.includes(data.name) ? 'Unfavorite' : 'Favorite'
   names.innerText = data.name;
   let randLocal = Math.floor(Math.random(0, localData.length));
   locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "N/A";
-
   pokemonImg.src = data.sprites.other["official-artwork"].front_default;
   moves.innerText = "Moves: " + moveArray.join(", ");
   abilities.innerText = "Abilities: " + abilitiesArray.join(", ");
   typing.innerText = "Type(s): " + typeArr.join(", ");
 };
+
 searchBtn.addEventListener("click", () => {
   searchField.value ? ApiCall(searchField.value): alert("Please enter a valid Pokemon");
 });
@@ -70,21 +72,20 @@ pokemonImg.addEventListener("click", () => {
 });
 
 favBtn.addEventListener('click', () =>{
-    //grabbing the local storage key 'Favorites'
     let favorites = localStorage.getItem('favorites')
-    //favorites being set up as an array if there aren't any present
-    //if not, favorites is saved as the values of favorites as an array
     favorites = favorites ? JSON.parse(favorites) : []
-    //pushin name of PKN into favorites
+  
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
       ShowNotification(`You have removed ${data.name} from favorites`)
+      favBtn.textContent = "Favorite"
     }
     else{
       favorites.push(data.name)
       ShowNotification(`You've added ${data.name} to favorites!`)
+      favBtn.textContent = "Unfavorite"
     }
-    //creating the local storage key named, favorites
+   
     localStorage.setItem('favorites', JSON.stringify(favorites))
 })
 
@@ -92,11 +93,10 @@ const ShowNotification = (message) =>{
     //targetting p tag in div
     FavAdded.querySelector('p').textContent = message
     FavAdded.style.display = 'block'
-    //timer
+    //timers
     setTimeout(() => {
         FavAdded.style.display = 'none'
     }, 4000);
-    //reset timer
     setTimeout(() => {
         FavAdded.style.display = 'none'
     }, 4000)
@@ -104,8 +104,8 @@ const ShowNotification = (message) =>{
 
 showFavBtn.addEventListener('click', async () =>{
     let favorites = localStorage.getItem('favorites')
-    let pknName = document.createElement('p')
-    let emptyFav = document.createElement('p')
+    let pknName = document.createElement('h4')
+    let emptyFav = document.createElement('h3')
     
     if(favorites.length !== 0)
     {
@@ -127,11 +127,13 @@ showFavBtn.addEventListener('click', async () =>{
     
 })
 
-
 const favCall = async fav =>{
   let favPKMimg = document.createElement('img')
   const favpromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav}`)
   const favdata = await favpromise.json()
-  favPKMimg.src = favdata.sprites.front_default
+  favPKMimg.src = favdata.sprites.other.showdown.front_default
+  favPKMimg.addEventListener('click', () =>{
+    ApiCall(favdata.name)
+  })
   favList.appendChild(favPKMimg)
 }
