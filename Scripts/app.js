@@ -36,9 +36,7 @@ const ApiCall = async (pokemon) => {
         evoArr.push(evo.species.name);
         seeEvos(evo);
         });
-      }
-
-      
+      } 
     };
     seeEvos(evoChainData.chain);
     evolutions.textContent = evoArr.join(" > ");
@@ -79,12 +77,11 @@ favBtn.addEventListener('click', () =>{
     //pushin name of PKN into favorites
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
-      
       ShowNotification(`You have removed ${data.name} from favorites`)
     }
     else{
-        favorites.push(data.name)
-        ShowNotification(`You've added ${data.name} to favorites!`)
+      favorites.push(data.name)
+      ShowNotification(`You've added ${data.name} to favorites!`)
     }
     //creating the local storage key named, favorites
     localStorage.setItem('favorites', JSON.stringify(favorites))
@@ -112,7 +109,6 @@ showFavBtn.addEventListener('click', () =>{
     favorites = favorites.join(', ')
     if(favorites.length > 0)
     {
-      
         if(once){
           favList.removeChild(pknName)
           once = false
@@ -122,7 +118,6 @@ showFavBtn.addEventListener('click', () =>{
           favList.appendChild(pknName)
           once = true
         }
-        
     }
     else{
       if(once){
