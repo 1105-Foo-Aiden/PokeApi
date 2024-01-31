@@ -2,8 +2,10 @@ let searchBtn = document.getElementById("searchBtn");
 let searchField = document.getElementById("searchField");
 let randomBtn = document.getElementById("randomBtn");
 let favBtn = document.getElementById("favBtn");
+let showFavBtn = document.getElementById('showFavBtn')
+let favList = document.getElementById('favList')
 let data;
-let shiny = false;
+let shiny = false,  once = false
 
 const ApiCall = async (pokemon) => {
   searchField.value = "";
@@ -55,9 +57,76 @@ searchBtn.addEventListener("click", () => {
 
 randomBtn.addEventListener("click", () => {
   let random = Math.floor(Math.random() * 649) + 1;
+  shiny = false
   ApiCall(random);
 });
 
 pokemonImg.addEventListener("click", () => {
   shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_default));
 });
+
+favBtn.addEventListener('click', () =>{
+    //grabbing the local storage key 'Favorites'
+    let favorites = localStorage.getItem('favorites')
+    //favorites being set up as an array if there aren't any present
+    favorites = favorites ? JSON.parse(favorites) : []
+    //pushin name of PKN into favorites
+    if(favorites.includes(data.name)){
+      favorites = favorites.filter(name => name !== data.name)
+      ShowNotification(`You have removed ${data.name} from favorites`)
+    }
+    else{
+        favorites.push(data.name)
+        ShowNotification(`You've added ${data.name} to favorites!`)
+    }
+    //creating the local storage key named, favorites
+    localStorage.setItem('favorites', JSON.stringify(favorites))
+})
+
+const ShowNotification = (message) =>{
+    //targetting p tag in div
+    FavAdded.querySelector('p').textContent = message
+    FavAdded.style.display = 'block'
+    //timer
+    setTimeout(() => {
+        FavAdded.style.display = 'none'
+    }, 4000);
+    //reset timer
+    setTimeout(() => {
+        FavAdded.style.display = 'none'
+    }, 4000)
+}
+
+showFavBtn.addEventListener('click', () =>{
+    let favorites = localStorage.getItem('favorites')
+    let pknName = document.createElement('li')
+    let emptyFav = document.createElement('p')
+    if(favorites && favorites.length > 0)
+    {
+        if(once){
+            favList.removeChild(pknName)
+            once = false
+        }
+        else{
+            pknName.textContent = favorites
+            favList.appendChild(pknName)
+            once = true
+        }
+        
+    }
+    else{
+      if(once){
+        favList.removeChild(emptyFav) 
+        once = false
+      }
+      else{
+        emptyFav.style = "color: white" 
+        emptyFav.textContent = 'You have no Saved Pokemon, go catch them!' 
+        favList.appendChild(emptyFav)  
+        once = true
+      }   
+    }
+})
+
+
+
