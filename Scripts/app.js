@@ -66,7 +66,7 @@ randomBtn.addEventListener("click", () => {
 });
 
 pokemonImg.addEventListener("click", () => {
-  shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_default));
+  shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_default)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny));
 });
 
 favBtn.addEventListener('click', () =>{
@@ -107,19 +107,20 @@ showFavBtn.addEventListener('click', async () =>{
     let pknName = document.createElement('p')
     let emptyFav = document.createElement('p')
     
-    if(favorites && favorites.length !== 0)
+    if(favorites.length !== 0)
     {
       favorites = JSON.parse(favorites)
       pknName.textContent = favorites.join(", ")
       favList.innerHTML = ""
-      
-      await favorites.forEach( async PKM =>{
-        await favCall(PKM)
-      })
-      
       favList.appendChild(pknName)
+
+      for(let i = 0; i < favorites.length; i++)
+      {
+        await favCall(favorites[i])
+      }
+      
     }
-   if(favorites && favorites.length == 0){
+   if(!favorites || favorites.length == 0){
       emptyFav.textContent = 'You have no Saved Pokemon, go catch them!'   
       favList.appendChild(emptyFav)
     }
