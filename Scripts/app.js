@@ -21,6 +21,7 @@ const ApiCall = async (pokemon) => {
 
   const evoChain = await fetch(`${evoData.evolution_chain.url}`);
   const evoChainData = await evoChain.json();
+  console.log(data.sprites.front_default)
 
   if (evoChainData.chain.evolves_to.length === 0) {
     evolutions.textContent = "N/A";
@@ -54,7 +55,6 @@ const ApiCall = async (pokemon) => {
   abilities.innerText = "Abilities: " + abilitiesArray.join(", ");
   typing.innerText = "Type(s): " + typeArr.join(", ");
 };
-
 searchBtn.addEventListener("click", () => {
   searchField.value ? ApiCall(searchField.value): alert("Please enter a valid Pokemon");
 });
@@ -73,6 +73,7 @@ favBtn.addEventListener('click', () =>{
     //grabbing the local storage key 'Favorites'
     let favorites = localStorage.getItem('favorites')
     //favorites being set up as an array if there aren't any present
+    //if not, favorites is saved as the values of favorites as an array
     favorites = favorites ? JSON.parse(favorites) : []
     //pushin name of PKN into favorites
     if(favorites.includes(data.name)){
@@ -101,34 +102,35 @@ const ShowNotification = (message) =>{
     }, 4000)
 }
 
-showFavBtn.addEventListener('click', () =>{
+showFavBtn.addEventListener('click', async () =>{
     let favorites = localStorage.getItem('favorites')
-    let pknName = document.createElement('li')
+    let pknName = document.createElement('p')
     let emptyFav = document.createElement('p')
-    favorites = JSON.parse(favorites)
-    favorites = favorites.join(', ')
-    if(favorites.length > 0)
+    
+    if(favorites && favorites.length !== 0)
     {
-        if(once){
-          favList.removeChild(pknName)
-          once = false
-        }
-        else{
-          pknName.textContent = favorites
-          favList.appendChild(pknName)
-          once = true
-        }
+      favorites = JSON.parse(favorites)
+      pknName.textContent = favorites.join(", ")
+      favList.innerHTML = ""
+      
+      await favorites.forEach( async PKM =>{
+        await favCall(PKM)
+      })
+      
+      favList.appendChild(pknName)
     }
-    else{
-      if(once){
-        favList.removeChild(emptyFav) 
-        once = false
-      }
-      else{
-        emptyFav.style = "color: white" 
-        emptyFav.textContent = 'You have no Saved Pokemon, go catch them!' 
-        favList.appendChild(emptyFav)  
-        once = true
-      }   
+   if(favorites && favorites.length == 0){
+      emptyFav.textContent = 'You have no Saved Pokemon, go catch them!'   
+      favList.appendChild(emptyFav)
     }
+    
 })
+
+
+const favCall = async fav =>{
+  let favPKMimg = document.createElement('img')
+  const favpromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav}`)
+  const favdata = await favpromise.json()
+  favPKMimg.src = favdata.sprites.front_default
+  favList.appendChild(favPKMimg)
+}
