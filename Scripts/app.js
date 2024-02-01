@@ -1,7 +1,7 @@
-let searchBtn = document.getElementById("searchBtn");
-let searchField = document.getElementById("searchField");
-let randomBtn = document.getElementById("randomBtn");
-let favBtn = document.getElementById("favBtn");
+let searchBtn = document.getElementById("searchBtn")
+let searchField = document.getElementById("searchField")
+let randomBtn = document.getElementById("randomBtn")
+let favBtn = document.getElementById("favBtn")
 let showFavBtn = document.getElementById('showFavBtn')
 let favList = document.getElementById('favList')
 let data
@@ -12,64 +12,64 @@ const ApiCall = async (pokemon) => {
   let favorites = localStorage.getItem('favorites')
   favorites = favorites ? JSON.parse(favorites) : []
 
-  searchField.value = "";
-  const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-  data = await promise.json();
+  searchField.value = ""
+  const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+  data = await promise.json()
 
-  const localFetch = await fetch(data.location_area_encounters);
-  const localData = await localFetch.json();
+  const localFetch = await fetch(data.location_area_encounters)
+  const localData = await localFetch.json()
   
-  const evoFetch = await fetch(`${data.species.url}`);
-  const evoData = await evoFetch.json();
+  const evoFetch = await fetch(`${data.species.url}`)
+  const evoData = await evoFetch.json()
 
-  const evoChain = await fetch(`${evoData.evolution_chain.url}`);
-  const evoChainData = await evoChain.json();
+  const evoChain = await fetch(`${evoData.evolution_chain.url}`)
+  const evoChainData = await evoChain.json()
   
   if (evoChainData.chain.evolves_to.length === 0) {
-    evolutions.textContent = "No Evolutions Available";
+    evolutions.textContent = "No Evolutions Available"
   } else {
-    const evoArr = [evoChainData.chain.species.name];
+    const evoArr = [evoChainData.chain.species.name]
 
     const seeEvos = chain => {
       if (chain.evolves_to.length === 0) {
-        return;
+        return
       }
       else{
         chain.evolves_to.forEach(evo => {
-        evoArr.push(evo.species.name);
-        seeEvos(evo);
-        });
+        evoArr.push(evo.species.name)
+        seeEvos(evo)
+        })
       } 
-    };
-    seeEvos(evoChainData.chain);
-    evolutions.textContent = evoArr.join(" > ");
+    }
+    seeEvos(evoChainData.chain)
+    evolutions.textContent = evoArr.join(" > ")
   }
-  const moveArray = data.moves.map(move => move.move.name);
-  const abilitiesArray = data.abilities.map(ability => ability.ability.name);
-  const typeArr = data.types.map(type => type.type.name);
+  const moveArray = data.moves.map(move => move.move.name)
+  const abilitiesArray = data.abilities.map(ability => ability.ability.name)
+  const typeArr = data.types.map(type => type.type.name)
   favBtn.textContent = favorites.includes(data.name) ? 'Unfavorite' : 'Favorite'
-  names.innerText = data.name;
-  let randLocal = Math.floor(Math.random(0, localData.length));
-  locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "No Available Locations";
-  pokemonImg.src = data.sprites.other["official-artwork"].front_default;
-  moves.innerText = "Moves: " + moveArray.join(", ");
-  abilities.innerText = "Abilities: " + abilitiesArray.join(", ");
-  typing.innerText = "Type(s): " + typeArr.join(", ");
-};
+  names.innerText = data.name
+  let randLocal = Math.floor(Math.random(0, localData.length))
+  locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "No Available Locations"
+  pokemonImg.src = data.sprites.other["official-artwork"].front_default
+  moves.innerText = "Moves: " + moveArray.join(", ")
+  abilities.innerText = "Abilities: " + abilitiesArray.join(", ")
+  typing.innerText = "Type(s): " + typeArr.join(", ")
+}
 
 searchBtn.addEventListener("click", () => {
-  searchField.value ? ApiCall(searchField.value): alert("Please enter a valid Pokemon");
-});
+  searchField.value ? ApiCall(searchField.value): alert("Please enter a valid Pokemon")
+})
 
 randomBtn.addEventListener("click", () => {
-  let random = Math.floor(Math.random() * 649) + 1;
+  let random = Math.floor(Math.random() * 649) + 1
   shiny = false
-  ApiCall(random);
-});
+  ApiCall(random)
+})
 
 pokemonImg.addEventListener("click", () => {
-  shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_default)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny));
-});
+  shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_default)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny))
+})
 
 favBtn.addEventListener('click', () =>{
     let favorites = localStorage.getItem('favorites')
@@ -77,7 +77,7 @@ favBtn.addEventListener('click', () =>{
   
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
-      ShowNotification(`You have removed ${data.name} from favorites`)
+      ShowNotification(`You removed ${data.name} from favorites`)
       favBtn.textContent = "Favorite"
     }
     else{
@@ -96,7 +96,7 @@ const ShowNotification = (message) =>{
     //timers
     setTimeout(() => {
         FavAdded.style.display = 'none'
-    }, 4000);
+    }, 4000)
     setTimeout(() => {
         FavAdded.style.display = 'none'
     }, 4000)
