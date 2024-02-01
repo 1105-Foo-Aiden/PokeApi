@@ -26,7 +26,7 @@ const ApiCall = async (pokemon) => {
   const evoChainData = await evoChain.json();
   
   if (evoChainData.chain.evolves_to.length === 0) {
-    evolutions.textContent = "N/A";
+    evolutions.textContent = "No Evolutions Available";
   } else {
     const evoArr = [evoChainData.chain.species.name];
 
@@ -50,7 +50,7 @@ const ApiCall = async (pokemon) => {
   favBtn.textContent = favorites.includes(data.name) ? 'Unfavorite' : 'Favorite'
   names.innerText = data.name;
   let randLocal = Math.floor(Math.random(0, localData.length));
-  locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "N/A";
+  locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "No Available Locations";
   pokemonImg.src = data.sprites.other["official-artwork"].front_default;
   moves.innerText = "Moves: " + moveArray.join(", ");
   abilities.innerText = "Abilities: " + abilitiesArray.join(", ");

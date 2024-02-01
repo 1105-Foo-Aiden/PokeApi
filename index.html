@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="./src/output.css" />
   </head>
   <body class="bg-gray-700 text-white">
+   <div class="flex justify-center">
     <div class="container-fluid grid grid-cols-1 grid-rows-1">
-      <img src="./Assets/Pokeball-1.png" alt="Pokeball starting img" id="pokemonImg" class="w-96 h-96 shadow-xl shadow-grey-800" />
+      <img src="./Assets/Pokeball-1.png" alt="Pokeball starting img" id="pokemonImg" class="w-96 h-96 shadow-xl shadow-grey-800 justify-end" />
+      <br>
       <!-- drawer init and toggle -->
-     
-
-      <!-- drawer component -->
+       <!-- drawer component -->
       <div id="drawer-top-example" class="fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-gray-500 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
         <h5
           id="drawer-top-label"
           class="inline-flex items-center mb-4 text-base font-semibold text-white dark:text-gray-400">
-         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" /></svg>Favorites (click on one to navigate to it's page)
+         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" /></svg>Favorites (click on the sprite to navigate to it's page)
         </h5>
         <div >
             <p class="grid " id="favList"></p>
@@ -30,56 +30,53 @@
           <span class="sr-only">Close menu</span>
         </button>
       </div>
-
+    <div class="text-center grid grid-cols-1 grid-rows-5 gap-2">
       <input
         type="text"
         id="searchField"
         placeholder="Enter a Pokemon's name or number"
-        class="mb-3 bg-gray-50 text-gray-900"/>
+        class="mb-3 bg-gray-50 text-gray-900 w-96 h-15"/>
 
       <button
         type="button"
         id="searchBtn"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-96 h-15">
         Search
       </button>
       <button
         type="button"
         id="randomBtn"
-        class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+        class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900 w-96 h-15">
         Random
       </button>
       <button
         type="button"
         id="favBtn"
-        class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" >
+        class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-96 h-15" >
         Favorite
       </button>
-      <div class="text-center">
-        <button class="overflow-y-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-top-example" data-drawer-show="drawer-top-example" data-drawer-placement="top" aria-controls="drawer-top-example" id="showFavBtn">
-          Show Favorites
-        </button>
+       <button class="overflow-y-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-96 h-15 text-center" type="button" data-drawer-target="drawer-top-example" data-drawer-show="drawer-top-example" data-drawer-placement="top"aria-controls="drawer-top-example" id="showFavBtn">
+       Show Favorites
+       </button>
       </div>
-      <div class="grid grid-cols-1 grid-rows-1">
-        <p id="names" class="text-4xl">Name Goes Here</p>
-        <br />
-        <p id="typing" class="text-4xl">Type goes here</p>
-        <br />
-        <p id="abilities" class="text-4xl">Abilities go here</p>
-        <br />
-        <p id="locations" class="text-4xl">Locations Go here</p>
-        <br />
-        <p id="moves">Moves go here</p>
-        <br />
-        <p id="evolutions" class="text-2xl">Evolutions go here
-         
-        </p>
+        <p id="names" class="text-4xl max-w-96">Name Goes Here</p>
+        <br>
+        <p id="typing" class="text-4xl max-w-96">Type goes here</p>
+        <br>
+        <p id="abilities" class="text-4xl max-w-96">Abilities go here</p>
+        <br>
+        <p id="locations" class="text-4xl max-w-96 ">Locations Go here</p>
+        <br>
+        <p id="moves" class="text-3xl max-h-20 max-w-96 overflow-y-scroll">Moves go here</p>
+        <br>
+        <p id="evolutions" class="text-2xl max-w-96 ">Evolutions go here</p>
       </div>
     </div>
     <div class="notification" id="FavAdded" style="display: none">
       <p style="font-size: 25px">Favorite Notification</p>
       <span class="notification_progress"></span>
     </div>
+   </div>
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="./Scripts/app.js"></script>
   </body>
