@@ -47,7 +47,7 @@ const ApiCall = async (pokemon) => {
   const moveArray = data.moves.map(move => move.move.name)
   const abilitiesArray = data.abilities.map(ability => ability.ability.name)
   const typeArr = data.types.map(type => type.type.name)
-  favBtn.textContent = favorites.includes(data.name) ? 'Unfavorite' : 'Favorite'
+  favBtn.textContent = favorites.includes(data.name) ? 'Remove from Favorites' : 'Add to Favorites'
   names.innerText = data.name
   let randLocal = Math.floor(Math.random(0, localData.length))
   locations.textContent = localData.length !== 0 ? "Locate them at: " + localData[randLocal].location_area.name : "No Available Locations"
@@ -99,12 +99,12 @@ favBtn.addEventListener('click', () =>{
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
       ShowNotification(`You removed ${data.name} from favorites`)
-      favBtn.textContent = "Favorite"
+      favBtn.textContent = "Add to Favorites"
     }
     else{
       favorites.push(data.name)
       ShowNotification(`You've added ${data.name} to favorites!`)
-      favBtn.textContent = "Unfavorite"
+      favBtn.textContent = "Remove from Favorites"
     }
     localStorage.setItem('favorites', JSON.stringify(favorites))
 })
