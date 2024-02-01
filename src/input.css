@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+hr{
+  color: black;
+}
+
 .notification {
   position: absolute;
   bottom: 50px;

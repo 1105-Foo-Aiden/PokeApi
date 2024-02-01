@@ -55,10 +55,11 @@ const ApiCall = async (pokemon) => {
   moves.innerText = "Moves: " + moveArray.join(", ")
   abilities.innerText = "Abilities: " + abilitiesArray.join(", ")
   typing.innerText = "Type(s): " + typeArr.join(", ")
+  pokemonSprite.src = data.sprites.other.showdown.front_default
 }
 
 searchBtn.addEventListener("click", () => {
-  searchField.value ? ApiCall(searchField.value): alert("Please enter a valid Pokemon")
+  searchField.value ? ApiCall(searchField.value): names.innerText = "Please enter a valid Pokemon name"
 })
 
 randomBtn.addEventListener("click", () => {
@@ -66,15 +67,35 @@ randomBtn.addEventListener("click", () => {
   shiny = false
   ApiCall(random)
 })
+pokemonSprite.addEventListener('click', () =>{
+  if(shiny){
+    shiny = false;
+    pokemonImg.src = data.sprites.other["official-artwork"].front_default
+    pokemonSprite.src = data.sprites.other.showdown.front_default
+  }
+  else{
+    shiny =true
+    pokemonImg.src = data.sprites.other["official-artwork"].front_shiny
+    pokemonSprite.src = data.sprites.other.showdown.front_shiny
+  }
+})
 
 pokemonImg.addEventListener("click", () => {
-  shiny ? ((shiny = false), (pokemonImg.src = data.sprites.other["official-artwork"].front_default)) : ((shiny = true), (pokemonImg.src = data.sprites.other["official-artwork"].front_shiny))
+  if(shiny){
+    shiny = false;
+    pokemonImg.src = data.sprites.other["official-artwork"].front_default
+    pokemonSprite.src = data.sprites.other.showdown.front_default
+  }
+  else{
+    shiny =true
+    pokemonImg.src = data.sprites.other["official-artwork"].front_shiny
+    pokemonSprite.src = data.sprites.other.showdown.front_shiny
+  }
 })
 
 favBtn.addEventListener('click', () =>{
     let favorites = localStorage.getItem('favorites')
     favorites = favorites ? JSON.parse(favorites) : []
-  
     if(favorites.includes(data.name)){
       favorites = favorites.filter(name => name !== data.name)
       ShowNotification(`You removed ${data.name} from favorites`)
@@ -85,7 +106,6 @@ favBtn.addEventListener('click', () =>{
       ShowNotification(`You've added ${data.name} to favorites!`)
       favBtn.textContent = "Unfavorite"
     }
-   
     localStorage.setItem('favorites', JSON.stringify(favorites))
 })
 
@@ -124,7 +144,7 @@ showFavBtn.addEventListener('click', async () =>{
    if(!favorites || favorites.length == 0){
       favList.innerHTML = ""
       favImgs.innerHTML = ""
-      emptyFav.textContent = 'You have no Saved Pokemon, go catch them!'   
+      emptyFav.textContent = 'You have no saved Pokemon, go catch some!'   
       favList.appendChild(emptyFav)
     }
     

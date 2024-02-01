@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="./src/output.css" />
   </head>
   <body class="bg-gray-700 text-white">
-   <div class="flex justify-center">
-    <div class="container-fluid grid grid-cols-1 grid-rows-1">
+   <div class=" container-fluid flex justify-center mt-5  ">
+    <div class="container-fluid grid lg:grid-cols-2 grid-rows-1 gap-x-60 gap-y-10 sm:grid-cols-1">
       <img src="./Assets/Pokeball-1.png" alt="Pokeball starting img" id="pokemonImg" class="w-96 h-96 shadow-xl shadow-grey-800 justify-end" />
-      <br>
+      <img src="./Assets/Pokeball-1.png" alt="moving sprite" id="pokemonSprite" class="w-96 h-96 shadow-xl shadow-grey-800 justify-end">
       <!-- drawer init and toggle -->
        <!-- drawer component -->
       <div id="drawer-top-example" class="fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-gray-500 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
@@ -29,6 +29,7 @@
           </svg>
           <span class="sr-only">Close menu</span>
         </button>
+        
       </div>
     <div class="text-center grid grid-cols-1 grid-rows-5 gap-2">
       <input
@@ -59,17 +60,22 @@
        Show Favorites
        </button>
       </div>
-        <p id="names" class="text-4xl max-w-96">Name Goes Here</p>
-        <br>
-        <p id="typing" class="text-4xl max-w-96">Type goes here</p>
-        <br>
-        <p id="abilities" class="text-4xl max-w-96">Abilities go here</p>
-        <br>
-        <p id="locations" class="text-4xl max-w-96 ">Locations Go here</p>
-        <br>
+      <div class="grid gap-1">
+         <p id="names" class="text-3xl max-w-96">Name Goes here</p>
+        <hr>
+        <p id="typing" class="text-3xl max-w-96">Type goes here</p>
+        <hr>
+        <p id="abilities" class="text-3xl max-w-96">Abilities go here</p>
+        <hr>
+        <p id="locations" class="text-2xl max-w-96 ">Locations go here</p>
+        <hr>
         <p id="moves" class="text-3xl max-h-20 max-w-96 overflow-y-scroll">Moves go here</p>
-        <br>
+        <hr>
         <p id="evolutions" class="text-2xl max-w-96 ">Evolutions go here</p>
+      </div>
+       
+    
+       
       </div>
     </div>
     <div class="notification" id="FavAdded" style="display: none">
