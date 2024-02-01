@@ -17,10 +17,11 @@
         <h5
           id="drawer-top-label"
           class="inline-flex items-center mb-4 text-base font-semibold text-white dark:text-gray-400">
-         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" /></svg>Favorites
+         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" /></svg>Favorites (click on one to navigate to it's page)
         </h5>
         <div >
-            <p class="grid grid-cols-5 grid-rows-3" id="favList"></p>
+            <p class="grid " id="favList"></p>
+            <p class="grid grid-cols-6" id="favImgs"></p>
         </div>
         <button type="button" data-drawer-hide="drawer-top-example" aria-controls="drawer-top-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -71,7 +72,7 @@
         <p id="moves">Moves go here</p>
         <br />
         <p id="evolutions" class="text-2xl">Evolutions go here
-          <div class="grid" id="evoImg"></div>
+         
         </p>
       </div>
     </div>

@@ -10,7 +10,7 @@ let shiny = false
 
 const ApiCall = async (pokemon) => {
   let favorites = localStorage.getItem('favorites')
-  favorites = JSON.parse(favorites)
+  favorites = favorites ? JSON.parse(favorites) : []
 
   searchField.value = "";
   const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -112,6 +112,7 @@ showFavBtn.addEventListener('click', async () =>{
       favorites = JSON.parse(favorites)
       pknName.textContent = favorites.join(", ")
       favList.innerHTML = ""
+      favImgs.innerHTML = ""
       favList.appendChild(pknName)
 
       for(let i = 0; i < favorites.length; i++)
@@ -121,6 +122,8 @@ showFavBtn.addEventListener('click', async () =>{
       
     }
    if(!favorites || favorites.length == 0){
+      favList.innerHTML = ""
+      favImgs.innerHTML = ""
       emptyFav.textContent = 'You have no Saved Pokemon, go catch them!'   
       favList.appendChild(emptyFav)
     }
@@ -135,5 +138,5 @@ const favCall = async fav =>{
   favPKMimg.addEventListener('click', () =>{
     ApiCall(favdata.name)
   })
-  favList.appendChild(favPKMimg)
+  favImgs.appendChild(favPKMimg)
 }
